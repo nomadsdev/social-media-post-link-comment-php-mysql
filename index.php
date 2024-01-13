@@ -23,7 +23,7 @@ $result = $conn->query("SELECT * FROM posts ORDER BY created_at DESC");
 // แสดงโพสต์
 while ($row = $result->fetch_assoc()) {
     echo "<div class='flex justify-center'>";
-    echo "<div class='border border-black rounded-md p-5'>";
+    echo "<div class='bg-zinc-50 shadow-md rounded-md p-5'>";
     echo "<div class=''>";
         echo "<p class='pr-2'>User : {$row['user_name']}</p>";
         echo "<p>{$row['post_text']}</p>";
@@ -34,12 +34,12 @@ while ($row = $result->fetch_assoc()) {
     $likeResult = $conn->query("SELECT COUNT(*) as like_count FROM likes WHERE post_id = {$row['id']}");
     $likeRow = $likeResult->fetch_assoc();
     $likeCount = $likeRow['like_count'];
-    echo "<p class='pr-2'>{$likeCount}</p>";
+    echo "<p class='pr-2 text-rose-500'>{$likeCount}</p>";
 
     // แสดงปุ่มไลค์
     echo "<form method='post' action='like.php'>";
     echo "<input type='hidden' name='post_id' value='{$row['id']}'>";
-    echo "<input type='submit' value='Like' class='border border-black rounded-md px-4 hover:bg-black hover:text-white cursor-pointer'>";
+    echo "<input type='submit' value='Like' class='bg-rose-500 text-white rounded-md px-4 hover:bg-rose-600 cursor-pointer transition'>";
     echo "</form>";
     echo "</div>";
     
@@ -47,13 +47,13 @@ while ($row = $result->fetch_assoc()) {
     echo "<form method='post' action='comment.php'>";
     echo "<input type='hidden' name='post_id' value='{$row['id']}'>";
     $commentResult = $conn->query("SELECT * FROM comments WHERE post_id = {$row['id']} ORDER BY created_at DESC");
-    echo "<ul>";
+    echo "<ul class='py-2'>";
     while ($commentRow = $commentResult->fetch_assoc()) {
-        echo "<li>{$commentRow['user_name']}: {$commentRow['comment_text']}</li>";
+        echo "<li class='text-zinc-500'>{$row['user_name']} : {$commentRow['comment_text']}</li>";
     }
     echo "</ul>";
-    echo "<input type='text' name='comment_text' placeholder='Add a comment...'>";
-    echo "<input type='submit' value='Comment'>";
+    echo "<input type='text' name='comment_text' placeholder='Add a comment...' class='rounded-sm pl-2 mr-2'>";
+    echo "<input type='submit' value='Comment' class='shadow-sm py-1 bg-sky-500 text-white rounded-md px-4 hover:bg-sky-600 cursor-pointer transition'>";
     echo "</form>";
 
     echo "</div>";
@@ -84,14 +84,14 @@ $conn->close();
 
         <!-- แบบฟอร์มเพิ่มโพสต์ -->
         <div class='flex justify-center'>
-            <div class='border border-black rounded-xl p-5'>
+            <div class='bg-zinc-50 shadow-md rounded-xl p-5'>
                 <div class='pb-4'>
                     <img class='w-10' src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="">
                 </div>
                 <form method="post" action="" class='grid grid-cols-2 gap-5'>
-                    <input type="text" name="user_name" placeholder="Your Name" required class='border border-black rounded-md pl-2'>
-                    <textarea name="post_text" placeholder="What's on your mind?" required class='border border-black rounded-md pl-2 resize-none'></textarea>
-                    <input type="submit" value="Post" class='border border-black rounded-md hover:bg-black hover:text-white transition'>
+                    <input type="text" name="user_name" placeholder="Your Name" required class='rounded-md pl-2'>
+                    <textarea name="post_text" placeholder="What's on your mind?" required class='rounded-md pl-2 resize-none'></textarea>
+                    <input type="submit" value="Post" class='shadow-sm py-2 bg-sky-500 text-white rounded-md px-4 hover:bg-sky-600 cursor-pointer transition'>
                 </form>
             </div>
         </div>
